@@ -1,83 +1,88 @@
 <div class="container">
   <div class="row custom-wrapper">
-    <div class="col-md-12">
 
-      <!-- Form starts -->
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <!-- Form starts -->
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
 
-        <div class="group-gap">
+      <div class="group-gap">
 
-          <!-- Upload image -->
-          <div class="avatar-upload avatar-preview">
-            <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
-          </div>
+        <!-- Upload image -->
+        <div class="avatar-upload avatar-preview">
+          <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
+        </div>
 
-          <!-- Full name -->
-          <div formGroupName="fullName">
-            <div class="mb-3">
-              <label [ngClass]="{'error': submitted && myForm.fullName.controls.fullName.errors}">
-                Full name</label>
-              <input type="text" class="form-control" formControlName="fullName"
-                [ngClass]="{'error': submitted && myForm.fullName.controls.fullName.errors}">
-              <!-- error block -->
-              <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.required">
-                <sup>*</sup>Enter your name
-              </div>
-              <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.minlength">
-                <sup>*</sup>Name must be 2 characters long
-              </div>
-              <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.pattern">
-                <sup>*</sup>No special charcter allowed
-              </div>
-            </div>
-          </div>
+        <div class="group-gap ">
+          <div class=' khaimah-title '>Welcome to Ras Al Khaimah's FIFA World Cup competition!</div>
 
-          <!-- Mobile number -->
-          <div class="mb-3">
-            <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">Mobile number</label>
-            <input type="text" class="form-control" formControlName="mobileNumber"
-              [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
 
+          <div class=' khaimah-sub-title '>Are you ready to be a winner</div>
+
+        </div>
+
+
+        <!-- Full name -->
+        <div formGroupName="fullName">
+          <div class="mb-3" class='full-name-specific-styles'>
+            <label class='label-margin' [ngClass]="{'error': submitted && myForm.fullName.controls.fullName.errors}">
+              Full name</label>
+            <input type="text" class="form-control" formControlName="fullName"
+              [ngClass]="{'error': submitted && myForm.fullName.controls.fullName.errors}">
             <!-- error block -->
-            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxLength">
-              <sup>*</sup>Phone number must be 10 digit long
+            <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.required">
+              <sup>*</sup>Enter your name
             </div>
-            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.required">
-              <sup>*</sup>Please enter your phone number
+            <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.minlength">
+              <sup>*</sup>Name must be 2 characters long
             </div>
-            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.pattern">
-              <sup>*</sup>Please enter valid phone number
-            </div>
-          </div>
-        </div>
-
-        <!-- Question Here -->
-        <div class="group-gap">
-          <h5 class="mb-3">Question Here</h5>
-          <div class="d-block my-3">
-            <div class="custom-control custom-radio">
-              <input id="true" type="radio" class="custom-control-input" name="question" formControlName="question"
-                value="true" checked>
-              <label class="custom-control-label" for="true">True</label>
-            </div>
-
-            <div class="custom-control custom-radio">
-              <input id="false" type="radio" class="custom-control-input" name="question" formControlName="question"
-                value="false">
-              <label class="custom-control-label" for="false">False</label>
+            <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.controls.fullName.errors?.pattern">
+              <sup>*</sup>No special charcter allowed
             </div>
           </div>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-danger btn-lg btn-block">Create Superhero</button>
-      </form><!-- Form ends -->
-    </div>
+        <!-- Mobile number -->
+        <div class="mb-3" class='mobile-number-specific-styles'>
+          <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}" class='label-margin'>Mobile
+            number</label>
+          <input type="text" class="form-control" formControlName="mobileNumber"
+            [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
 
-    <div style='background:white; margin-top:20px'>
+          <!-- error block -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxLength">
+            <sup>*</sup>Phone number must be 10 digit long
+          </div>
+          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.required">
+            <sup>*</sup>Please enter your phone number
+          </div>
+          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.pattern">
+            <sup>*</sup>Please enter valid phone number
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Here -->
+      <div class="group-gap">
+        <h5 class="mb-3" class='label-specific-styles'>Italy is hosting FIFA World Cup 2022</h5>
+        <div class="d-block my-3" class='label-specific-styles'>
+          <label class="custom-control-label" [ngClass]="{'custom-control-label-active':firstValueSelected }"
+            (click)='setValueFalse();'>True</label>
+
+          <label class="custom-control-label" [ngClass]="{'custom-control-label-active':secondValueSelected }"
+            (click)='setValueTrue();'>False</label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class='submit-btn-container'>
+        <button type="submit" class=" btn btn-danger btn-lg btn-block">Submit</button>
+      </div>
+    </form><!-- Form ends -->
+
+    <!-- <div style='background:white; margin-top:20px'>
       form value is {{registrationForm.value | json}}
       param from backend is {{id}}
-    </div>
+    </div> -->
 
   </div>
+
 </div>

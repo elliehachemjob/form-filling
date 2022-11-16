@@ -180,9 +180,10 @@ label {
  font-size: 14px;
  color: #222222;
  border-radius: 0;
- background: #FDFDFD;
+ background: rgb(156, 175, 144);
  border: 1px solid #312BC6;
- width: 100%
+ width: 100%;
+ border-radius: 50px;
 }
 
 .custom-select {
@@ -224,7 +225,6 @@ label {
 body .btn-danger:hover {
  background: #312BC6;
  border-color: #312BC6;
- color: #4EABE6;
  width: 100%
 }
 
@@ -266,11 +266,11 @@ body .btn-danger:hover {
 
  .mb-3,
  .my-3 {
-  margin-left: 70px;
+  /* margin-left: 70px; */
  }
 
  .display-5 {
-  margin-left: 50px;
+  /* margin-left: 50px; */
  }
 }
 
@@ -293,10 +293,141 @@ body {
 
 }
 
-@media only screen and (min-width: 991px) {
+
+
+body {
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: 100% 100%;
+}
+
+@media only screen and (min-width: 767px) {
  body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
  }
+
+}
+
+
+/* Just for Mobile version */
+@media only screen and (max-width: 767px) {
+ .custom-control-label {
+  width: 60%;
+ }
+
+ .form-control {
+  width: 60%;
+ }
+
+ label {
+  display: block;
+ }
+
+
+ .label-light {}
+
+ .label-bold {}
+
+ .full-name-specific-styles,
+ .mobile-number-specific-styles,
+ .label-specific-styles {
+  /* margin-left: 50px; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ }
+
+ .label-margin {
+  margin-top: 10px;
+ }
+
+
+
+ .btn-danger {
+  width: 50%;
+ }
+
+ .submit-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin-left: 50px; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+ }
+}
+
+.khaimah-title {
+ color: white;
+ font-weight: bold !important;
+ margin-left: 50px;
+ font-size: 20px;
+ line-height: 1.5em;
+ width: calc(100% - 100px)
+}
+
+
+.khaimah-sub-title {
+ color: white;
+ font-weight: 100 !important;
+ margin-left: 50px;
+ font-size: 20px;
+}
+
+
+.form-control {
+ height: 30px;
+}
+
+
+
+.custom-control-label {
+ background-color: rgb(156, 175, 144);
+ display: block;
+ border-radius: 50px;
+ height: 30px;
+ margin-top: 10px;
+ padding-top: 7px;
+ padding-left: 25px;
+ color: black;
+ font-weight: bold !important;
+}
+
+.btn-danger {
+ height: 50px;
+ border-radius: 50px;
+ color: white
+}
+
+
+.btn-danger:hover {
+ opacity: 90%;
+}
+
+
+
+.container {
+ margin-top: 20vh;
+}
+
+.label-margin {
+ display: block;
+ margin-bottom: 5px;
+ margin-top: 10px;
+}
+
+.custom-control-label:hover {
+ opacity: 90%
+}
+
+.form-control:active {
+ opacity: 95%
+}
+
+.custom-control-label-active {
+ background: red
 }

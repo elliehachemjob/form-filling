@@ -1,30 +1,26 @@
 
-import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
   submitted = false;
   id: any;
-  // City names
-  City: any = ['Florida', 'South Dakota', 'Tennessee', 'Michigan'];
-
+  imageUrl: any = '../assets/rak-logo.png';
+  firstValueSelected: any;
+  secondValueSelected: any;
   constructor(
     public fb: FormBuilder,
-    private cd: ChangeDetectorRef,
     private location: Location
   ) {
     this.location.replaceState("/BackendIdIncrementOnEachPostSubmitted");
     this.id = window.location.pathname.replace('/', '');
   }
-
 
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
@@ -36,43 +32,23 @@ export class AppComponent {
     question: null,
   });
 
-  /*########################## File Upload ########################*/
-  @ViewChild('fileInput') el: any;
-  imageUrl: any = '../assets/rak-logo.png';
-  editFile: boolean = true;
-  removeUpload: boolean = false;
 
-  uploadFile(event: any) {
-    let reader = new FileReader(); // HTML5 FileReader API
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
-      reader.onload = () => {
-        this.imageUrl = reader.result;
-        this.registrationForm.patchValue({
-          // @ts-ignore
-          file: reader.result
-        });
-        this.editFile = false;
-        this.removeUpload = true;
-      };
-      // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();
+  setValueFalse() {
+    // @ts-ignore
+    this.registrationForm.value.question = false;
+    this.firstValueSelected = true;
+    if (this.secondValueSelected) {
+      this.secondValueSelected = false;
     }
   }
 
-  // Function to remove uploaded file
-  removeUploadedFile() {
-    let newFileList = Array.from(this.el.nativeElement.files);
-    this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
-    this.editFile = true;
-    this.removeUpload = false;
-    this.registrationForm.patchValue({
-      // @ts-ignore
-      file: [null]
-    });
+  setValueTrue() {
+    // @ts-ignore
+    this.registrationForm.value.question = true;
+    this.secondValueSelected = true;
+    if (this.firstValueSelected) {
+      this.firstValueSelected = false;
+    }
   }
 
   // Getter method to access formcontrols
@@ -80,18 +56,19 @@ export class AppComponent {
     return this.registrationForm.controls;
   }
 
-
-
   // Submit Registration Form
   // @ts-ignore
   onSubmit() {
     this.submitted = true;
     if (!this.registrationForm.valid) {
-      alert('Please fill all the required fields to create a super hero!');
+      alert('Please fill all the required fields to submit your value!');
       return false;
     } else {
       console.log(this.registrationForm.value, this.id);
     }
   }
+
+
+
 
 }
