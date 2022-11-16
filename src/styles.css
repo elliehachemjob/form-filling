@@ -5,6 +5,7 @@
 }
 
 
+
 @import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,600');
 
 body {
@@ -287,4 +288,13 @@ body .btn-danger:hover {
  .display-5 {
   font-size: 20px
  }
+}
+
+body {
+ background-image: url('assets/background.jpg');
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+
+ /* background-color: red; */
 }
