@@ -1,8 +1,10 @@
-//@ts-nocheck
 
-import { Component, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from "@angular/forms";
 import { ValidatePassword } from "./validate-password";
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,14 +13,20 @@ import { ValidatePassword } from "./validate-password";
 
 export class AppComponent {
   submitted = false;
-
+  id: any;
   // City names
   City: any = ['Florida', 'South Dakota', 'Tennessee', 'Michigan'];
 
   constructor(
     public fb: FormBuilder,
-    private cd: ChangeDetectorRef
-  ) { }
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private location: Location
+  ) {
+    this.location.replaceState("/BackendIdIncrementOnEachPostSubmitted");
+    this.id = window.location.pathname.replace('/', '');
+  }
+
 
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
@@ -46,12 +54,12 @@ export class AppComponent {
   });
 
   /*########################## File Upload ########################*/
-  @ViewChild('fileInput') el: ElementRef;
+  @ViewChild('fileInput') el: any;
   imageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
   editFile: boolean = true;
   removeUpload: boolean = false;
 
-  uploadFile(event) {
+  uploadFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
@@ -61,6 +69,7 @@ export class AppComponent {
       reader.onload = () => {
         this.imageUrl = reader.result;
         this.registrationForm.patchValue({
+          // @ts-ignore
           file: reader.result
         });
         this.editFile = false;
@@ -78,6 +87,7 @@ export class AppComponent {
     this.editFile = true;
     this.removeUpload = false;
     this.registrationForm.patchValue({
+      // @ts-ignore
       file: [null]
     });
   }
@@ -88,8 +98,8 @@ export class AppComponent {
   }
 
   // Choose city using select dropdown
-  changeCity(e) {
-    this.registrationForm.get('address.cityName').setValue(e.target.value, {
+  changeCity(e: any) {
+    this.registrationForm.get('address.cityName')?.setValue(e.target.value, {
       onlySelf: true
     });
   }
@@ -104,13 +114,14 @@ export class AppComponent {
   }
 
   // Submit Registration Form
+  // @ts-ignore
   onSubmit() {
     this.submitted = true;
     if (!this.registrationForm.valid) {
       alert('Please fill all the required fields to create a super hero!');
       return false;
     } else {
-      console.log(this.registrationForm.value);
+      console.log(this.registrationForm.value, this.id);
     }
   }
 
