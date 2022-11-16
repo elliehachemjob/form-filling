@@ -1,7 +1,6 @@
 
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from "@angular/forms";
-import { ValidatePassword } from "./validate-password";
+import { FormBuilder, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -20,7 +19,6 @@ export class AppComponent {
   constructor(
     public fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private router: Router,
     private location: Location
   ) {
     this.location.replaceState("/BackendIdIncrementOnEachPostSubmitted");
@@ -35,13 +33,7 @@ export class AppComponent {
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[_A-z0-9]*((-|\s)*[_A-z0-9])*$')]],
     }),
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-    address: this.fb.group({
-      street: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      cityName: ['', [Validators.required]]
-    }),
-    gender: ['male'],
-    addDynamicElement: this.fb.array([])
+    question: null,
   });
 
   /*########################## File Upload ########################*/
@@ -88,21 +80,7 @@ export class AppComponent {
     return this.registrationForm.controls;
   }
 
-  // Choose city using select dropdown
-  changeCity(e: any) {
-    this.registrationForm.get('address.cityName')?.setValue(e.target.value, {
-      onlySelf: true
-    });
-  }
 
-  /*############### Add Dynamic Elements ###############*/
-  get addDynamicElement() {
-    return this.registrationForm.get('addDynamicElement') as FormArray;
-  }
-
-  addSuperPowers() {
-    this.addDynamicElement.push(this.fb.control(''));
-  }
 
   // Submit Registration Form
   // @ts-ignore

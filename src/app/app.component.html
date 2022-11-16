@@ -8,16 +8,8 @@
         <div class="group-gap">
 
           <!-- Upload image -->
-          <div class="avatar-upload">
-            <div class="avatar-edit">
-              <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
-              <label for="imageUpload" *ngIf="editFile" [ngClass]="['custom-label', 'upload-image']"></label>
-              <label *ngIf="removeUpload" [ngClass]="['custom-label', 'remove-image']"
-                (click)="removeUploadedFile()"></label>
-            </div>
-            <div class="avatar-preview">
-              <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
-            </div>
+          <div class="avatar-upload avatar-preview">
+            <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
           </div>
 
           <!-- Full name -->
@@ -43,7 +35,7 @@
           <!-- Mobile number -->
           <div class="mb-3">
             <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">Mobile number</label>
-            <input type="text" class="form-control" formControlName="phoneNumber"
+            <input type="text" class="form-control" formControlName="mobileNumber"
               [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
 
             <!-- error block -->
@@ -64,21 +56,18 @@
           <h5 class="mb-3">Question Here</h5>
           <div class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="true" type="radio" class="custom-control-input" name="gender" formControlName="gender"
+              <input id="true" type="radio" class="custom-control-input" name="question" formControlName="question"
                 value="true" checked>
               <label class="custom-control-label" for="true">True</label>
             </div>
 
             <div class="custom-control custom-radio">
-              <input id="false" type="radio" class="custom-control-input" name="gender" formControlName="gender"
+              <input id="false" type="radio" class="custom-control-input" name="question" formControlName="question"
                 value="false">
               <label class="custom-control-label" for="false">False</label>
             </div>
           </div>
         </div>
-
-
-
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-danger btn-lg btn-block">Create Superhero</button>
