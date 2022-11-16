@@ -1,3 +1,10 @@
+*,
+::after,
+::before {
+ box-sizing: border-box;
+}
+
+
 @import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,600');
 
 body {
@@ -10,6 +17,9 @@ body {
  background: #312BC6;
  margin: 0 auto 25px;
  border-radius: 0;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 
 .h1,
@@ -63,6 +73,7 @@ label {
  color: #312BC6;
  border-color: #00FC79;
  background-color: #00FC79;
+ width: 100%;
 }
 
 .btn-group-lg>.btn,
@@ -172,6 +183,7 @@ label {
  border-radius: 0;
  background: #FDFDFD;
  border: 1px solid #312BC6;
+ width: 100%
 }
 
 .custom-select {
@@ -183,6 +195,7 @@ label {
  color: #222222;
  background-color: #FDFDFD;
  border: 1px solid #312BC6;
+ width: 100%;
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -213,6 +226,7 @@ body .btn-danger:hover {
  background: #312BC6;
  border-color: #312BC6;
  color: #4EABE6;
+ width: 100%
 }
 
 .subjectList {
