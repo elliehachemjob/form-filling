@@ -32,30 +32,21 @@ export class AppComponent {
   registrationForm = this.fb.group({
     file: [null],
     fullName: this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[_A-z0-9]*((-|\s)*[_A-z0-9])*$')]],
-      lastName: ['', [Validators.required]]
+      fullName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[_A-z0-9]*((-|\s)*[_A-z0-9])*$')]],
     }),
-    email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-    phoneNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+    mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
     address: this.fb.group({
       street: ['', [Validators.required]],
       city: ['', [Validators.required]],
       cityName: ['', [Validators.required]]
     }),
     gender: ['male'],
-    PasswordValidation: this.fb.group({
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    }, {
-      validator: ValidatePassword.MatchPassword // your validation method
-    }
-    ),
     addDynamicElement: this.fb.array([])
   });
 
   /*########################## File Upload ########################*/
   @ViewChild('fileInput') el: any;
-  imageUrl: any = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
+  imageUrl: any = '../assets/rak-logo.png';
   editFile: boolean = true;
   removeUpload: boolean = false;
 
