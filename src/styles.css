@@ -257,3 +257,34 @@ body .btn-danger:hover {
 .custom-control label {
  font-weight: 400;
 }
+
+
+/* media query for galaxy fold / improve later */
+@media only screen and (max-width: 654px) and (max-height: 281px) and (orientation:landscape) {
+ .avatar-upload {
+  margin-right: 100px !important;
+ }
+
+ .mb-3,
+ .my-3 {
+  margin-left: 70px;
+ }
+
+ .display-5 {
+  margin-left: 50px;
+ }
+}
+
+@media only screen and (max-width: 281px) and (max-height: 654px) and (orientation:portrait) {
+ .custom-wrapper {
+  margin-left: 30px;
+ }
+
+ .jumbotron {
+  margin-left: 45px;
+ }
+
+ .display-5 {
+  font-size: 20px
+ }
+}
