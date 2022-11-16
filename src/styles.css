@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,600');
+
+
+
 *,
 ::after,
 ::before {
@@ -6,7 +10,6 @@
 
 
 
-@import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,600');
 
 body {
  font-family: 'Muli', sans-serif;
