@@ -79,7 +79,7 @@ export class AppComponent {
     this.submitted = true;
     if (this.registrationForm.valid) {
       if (this.answerBooleanValue !== undefined) {
-        this.postQuestion();
+        this.postQuestion(this.id, this.answerBooleanValue, this.registrationForm.value.mobileNumber);
       } else {
         alert("Please fill all the required fields to submit your value");
       }
@@ -89,26 +89,25 @@ export class AppComponent {
   }
 
 
-  public getQuestion(id: any = "637758d6bb8b1441f47c9eb0"): Observable<any> {
+  public getQuestion(id: any): Observable<any> {
     const url = `http://localhost:8080/questions/${id}`;
-
     return this.http.get<any>(url);
   }
 
 
 
-  public postQuestion(question: any = "637756e518873f5590f68434", answer: boolean = false, phoneNumber = "76963338665") {
+  public postQuestion(questionID: any, answer: boolean = false, phoneNumber: any) {
 
 
     const PhoneNumberList = `http://localhost:8080/statistics`;
 
-    const QuestionDetails = `http://localhost:8080/questions/${question}`;
+    const QuestionDetails = `http://localhost:8080/questions/${questionID}`;
 
 
 
     this.http.get<any>(PhoneNumberList).subscribe((data) => {
 
-      const result = data.filter((data: any) => data.numbers.toString() === phoneNumber && data.IdNumber === '637756e518873f5590f68434');
+      const result = data.filter((data: any) => data.numbers.toString() === phoneNumber && data.IdNumber === questionID);
 
       if (result.length === 0) {
         alert("subbmited first time");
@@ -118,15 +117,15 @@ export class AppComponent {
           this.yesValue = data.Yes;
           this.noValue = data.No;
           if (answer) this.yesValue++; else this.noValue++;
-          this.http.put<any>(`http://localhost:8080/questions/${question}`, {
+          this.http.put<any>(`http://localhost:8080/questions/${questionID}`, {
             "reviewCount": this.reviewCount + 1,
             "Yes": this.yesValue,
             "No": this.noValue,
           }).subscribe();
         });
         this.http.post<any>(`http://localhost:8080/statistics/`, {
-          "numbers": 76963338665,
-          "IdNumber": question
+          "numbers": phoneNumber,
+          "IdNumber": questionID
         }).subscribe();
 
       }
