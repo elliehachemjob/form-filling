@@ -36,7 +36,6 @@ export class AppComponent {
       this.questionDescription = data.description;
     });
   }
-
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
     file: [null],
@@ -45,8 +44,6 @@ export class AppComponent {
     }),
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
   });
-
-
   setValueFalse() {
     // @ts-ignore
     this.registrationForm.value.question = false;
@@ -56,7 +53,6 @@ export class AppComponent {
       this.secondValueSelected = false;
     }
   }
-
   setValueTrue() {
     // @ts-ignore
     this.registrationForm.value.question = true;
@@ -67,12 +63,10 @@ export class AppComponent {
       this.firstValueSelected = false;
     }
   }
-
   // Getter method to access formcontrols
   get myForm() {
     return this.registrationForm.controls;
   }
-
   // Submit Registration Form
   // @ts-ignore
   onSubmit() {
@@ -87,30 +81,16 @@ export class AppComponent {
       alert("Please fill all the required fields to submit your value");
     }
   }
-
-
   public getQuestion(id: any): Observable<any> {
     const url = `http://localhost:8080/questions/${id}`;
     return this.http.get<any>(url);
   }
-
-
-
   public postQuestion(questionID: any, answer: boolean = false, phoneNumber: any) {
-
-
     const PhoneNumberList = `http://localhost:8080/statistics`;
-
     const QuestionDetails = `http://localhost:8080/questions/${questionID}`;
-
-
-
     this.http.get<any>(PhoneNumberList).subscribe((data) => {
-
       const result = data.filter((data: any) => data.numbers.toString() === phoneNumber && data.IdNumber === questionID);
-
       if (result.length === 0) {
-        alert("subbmited first time");
         console.log(result, "yo");
         this.http.get<any>(QuestionDetails).subscribe((data) => {
           this.reviewCount = data.reviewCount;
@@ -127,20 +107,11 @@ export class AppComponent {
           "numbers": phoneNumber,
           "IdNumber": questionID
         }).subscribe();
-
       }
       else {
         alert("number is already submitted to this question");
       }
     });
-
-
-
-
-
-
-
-
   }
 
 
