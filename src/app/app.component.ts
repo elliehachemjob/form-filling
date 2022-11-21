@@ -91,7 +91,7 @@ export class AppComponent {
 
 
 
-  public postQuestion(question: any = "637b52224499a81cfc580112", answer: boolean = false, phoneNumber = "769632385") {
+  public postQuestion(question: any = "637756e518873f5590f68434", answer: boolean = false, phoneNumber = "76963338665") {
 
 
     const PhoneNumberList = `http://localhost:8080/statistics`;
@@ -99,14 +99,14 @@ export class AppComponent {
     const QuestionDetails = `http://localhost:8080/questions/${question}`;
 
 
-    this.http.get<any>(PhoneNumberList).subscribe((data) => {
-      let numbers: any = [];
-      data.map((data: any) => numbers.push(data.QuestionID));
-      let MobileNumberFound = numbers[0].users.filter((data: any) => { return data.Number === phoneNumber; });
-      let checkIfAnsweredBefore = MobileNumberFound[0].questionIDAnswered.filter((data: any) => { return data.toString() === question; });
-      if (MobileNumberFound.length === 0 && checkIfAnsweredBefore.length === 0) {
-        // check this number if it answered this type of id 
 
+    this.http.get<any>(PhoneNumberList).subscribe((data) => {
+
+      const result = data.filter((data: any) => data.numbers.toString() === phoneNumber && data.IdNumber === '637756e518873f5590f68434');
+
+      if (result.length === 0) {
+        alert("subbmited first time");
+        console.log(result, "yo");
         this.http.get<any>(QuestionDetails).subscribe((data) => {
           this.reviewCount = data.reviewCount;
           this.yesValue = data.Yes;
@@ -118,16 +118,16 @@ export class AppComponent {
             "No": this.noValue,
           }).subscribe();
         });
+        this.http.post<any>(`http://localhost:8080/statistics/`, {
+          "numbers": 76963338665,
+          "IdNumber": question
+        }).subscribe();
 
       }
-      else[
-        alert("number is already founded here")
-      ];
-
-
-
+      else {
+        alert("number is already submitted to this question");
+      }
     });
-
 
 
 
