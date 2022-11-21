@@ -62,7 +62,12 @@
 
       <!-- Question Here -->
       <div class="group-gap">
-        <h5 class="mb-3" class='label-specific-styles'>Italy is hosting FIFA World Cup 2022</h5>
+        <h5 class="mb-3" class='label-specific-styles'>
+
+          <!-- Italy is hosting FIFA World Cup 2022 -->
+          {{questionDescription}}
+
+        </h5>
         <div class="d-block my-3" class='label-specific-styles'>
           <label class="custom-control-label" [ngClass]="{'custom-control-label-active':firstValueSelected }"
             (click)='setValueFalse();'>True</label>
