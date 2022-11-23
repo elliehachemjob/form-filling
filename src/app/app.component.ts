@@ -28,13 +28,22 @@ export class AppComponent {
   ) {
     this.id = window.location.pathname.replace('/', '');
     if (!this.id) {
-      this.id = '637756e518873f5590f68434';
+      this.getQuestion(this.id, true).subscribe(data => {
+        this.id = data[0]._id.toString();
+        this.questionDescription = data[0].question;
+        this.location.replaceState(`/${this.id}`);
+      });
     }
     this.location.replaceState(`/${this.id}`);
 
     this.getQuestion(this.id).subscribe(data => {
-      this.questionDescription = data.description;
+      this.questionDescription = data.question;
     });
+    if (this.questionDescription === undefined) {
+      this.getQuestion(this.id, true).subscribe(data => {
+        this.questionDescription = data[0].question;
+      });
+    };
   }
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
@@ -81,9 +90,22 @@ export class AppComponent {
       alert("Please fill all the required fields to submit your value");
     }
   }
-  public getQuestion(id: any): Observable<any> {
-    const url = `http://localhost:8080/questions/${id}`;
-    return this.http.get<any>(url);
+  public getQuestion(id: any, error: boolean = false): Observable<any> {
+
+    if (error) {
+      const url = `http://localhost:8080/questions`;
+      return this.http.get<any>(url);
+    }
+    else {
+      const url = `http://localhost:8080/questions/${id}`;
+      return this.http.get<any>(url);
+
+    }
+
+
+
+
+
   }
   public postQuestion(questionID: any, answer: boolean = false, phoneNumber: any) {
     const PhoneNumberList = `http://localhost:8080/statistics`;
