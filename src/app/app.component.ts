@@ -20,9 +20,9 @@ export class AppComponent {
   reviewCount: any;
   yesValue: any;
   noValue: any;
-  answerBooleanValue: any;
+  answerValue: any;
   answersNeeded: any;
-
+  selected: any;
 
   constructor(
     public fb: FormBuilder,
@@ -62,25 +62,14 @@ export class AppComponent {
     }),
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
   });
-  setValueFalse() {
+  setValue(index: any, answerId: any) {
     // @ts-ignore
-    this.registrationForm.value.question = false;
-    this.answerBooleanValue = false;
-    this.firstValueSelected = true;
-    if (this.secondValueSelected) {
-      this.secondValueSelected = false;
-    }
-  }
-  setValueTrue() {
-    // @ts-ignore
-    this.registrationForm.value.question = true;
-    this.answerBooleanValue = true;
+    this.answerValue = answerId;
+    this.selected = true;
 
-    this.secondValueSelected = true;
-    if (this.firstValueSelected) {
-      this.firstValueSelected = false;
-    }
+
   }
+
   // Getter method to access formcontrols
   get myForm() {
     return this.registrationForm.controls;
@@ -90,8 +79,8 @@ export class AppComponent {
   onSubmit() {
     this.submitted = true;
     if (this.registrationForm.valid) {
-      if (this.answerBooleanValue !== undefined) {
-        this.postQuestion(this.id, this.answerBooleanValue, this.registrationForm.value.mobileNumber);
+      if (this.answerValue !== undefined) {
+        this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
       } else {
         alert("Please fill all the required fields to submit your value");
       }
@@ -107,7 +96,6 @@ export class AppComponent {
     else {
       const url = `http://localhost:8080/questions/${id}`;
       return this.http.get<any>(url);
-
     }
   }
 

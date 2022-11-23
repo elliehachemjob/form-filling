@@ -69,11 +69,10 @@
 
         </h5>
         <div class="d-block my-3" class='label-specific-styles'>
-          <label class="custom-control-label" [ngClass]="{'custom-control-label-active':firstValueSelected }"
-            (click)='setValueFalse();'>True</label>
+          <li *ngFor="let item of answersNeeded;index as i;">
+            <label class="custom-control-label " (click)='setValue(i,item._id);'>{{item.Answer}}</label>
+          </li>
 
-          <label class="custom-control-label" [ngClass]="{'custom-control-label-active':secondValueSelected }"
-            (click)='setValueTrue();'>False</label>
         </div>
       </div>
 
