@@ -86,8 +86,6 @@ export class AppComponent {
   // @ts-ignore
   onSubmit() {
     this.submitted = true;
-    this.postQuestion();
-
     if (this.registrationForm.valid) {
       if (this.answerValue !== undefined) {
         // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
