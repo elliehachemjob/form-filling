@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,8 @@ export class AppComponent {
   answerValue: any;
   answersNeeded: any;
   selected: any;
+  correctAnswerID: any;
+  isAnswerCorrect: any;
 
   constructor(
     public fb: FormBuilder,
@@ -50,6 +53,9 @@ export class AppComponent {
 
     this.getAnswers().subscribe((answers) => {
       this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+      let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
+      this.correctAnswerID = correctAnswer[0]._id;
+
     });
 
   }
@@ -60,7 +66,7 @@ export class AppComponent {
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[_A-z0-9]*((-|\s)*[_A-z0-9])*$')]],
     }),
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-  });
+  }) as any;
   setValue(index: any, answerId: any) {
     // @ts-ignore
     this.answerValue = answerId;
@@ -80,14 +86,17 @@ export class AppComponent {
   // @ts-ignore
   onSubmit() {
     this.submitted = true;
+    this.postQuestion();
+
     if (this.registrationForm.valid) {
       if (this.answerValue !== undefined) {
-        this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
+        // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
+        this.postQuestion();
       } else {
-        alert("Please fill all the required fields to submit your value");
+        alert("Please fill all the required fields to submit your value 2 ");
       }
     } else {
-      alert("Please fill all the required fields to submit your value");
+      alert("Please fill all the required fields to submit your value 1");
     }
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
@@ -105,33 +114,34 @@ export class AppComponent {
     const url = `http://localhost:8080/answers`;
     return this.http.get<any>(url);
   }
-  public postQuestion(questionID: any, answer: boolean = false, phoneNumber: any) {
-    const PhoneNumberList = `http://localhost:8080/statistics`;
-    const QuestionDetails = `http://localhost:8080/questions/${questionID}`;
-    this.http.get<any>(PhoneNumberList).subscribe((data) => {
-      const result = data.filter((data: any) => data.numbers.toString() === phoneNumber && data.IdNumber === questionID);
-      if (result.length === 0) {
-        console.log(result, "yo");
-        this.http.get<any>(QuestionDetails).subscribe((data) => {
-          this.reviewCount = data.reviewCount;
-          this.yesValue = data.Yes;
-          this.noValue = data.No;
-          if (answer) this.yesValue++; else this.noValue++;
-          this.http.put<any>(`http://localhost:8080/questions/${questionID}`, {
-            "reviewCount": this.reviewCount + 1,
-            "Yes": this.yesValue,
-            "No": this.noValue,
-          }).subscribe();
-        });
-        this.http.post<any>(`http://localhost:8080/statistics/`, {
-          "numbers": phoneNumber,
-          "IdNumber": questionID
-        }).subscribe();
-      }
-      else {
-        alert("number is already submitted to this question");
-      }
-    });
+
+
+  checkIfAnswerCorrect() {
+    if (this.answerValue === this.correctAnswerID) {
+      this.isAnswerCorrect = true;
+    } else {
+      this.isAnswerCorrect = false;
+    }
+
+  }
+
+
+  public postQuestion() {
+    this.checkIfAnswerCorrect();
+    let answer;
+    if (this.isAnswerCorrect) answer = 1; else answer = 0;
+
+
+    this.http.post<any>(`http://localhost:8080/user-answers/`, {
+      "Name": this.registrationForm.value.fullName.fullName,
+      "phone": this.registrationForm.value.mobileNumber,
+      "questionID": this.id,
+      "question": this.questionDescription,
+      "answerId": this.answerValue,
+      "answer": answer
+    }).subscribe();
+
+
   }
 
 
