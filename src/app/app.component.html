@@ -1,25 +1,16 @@
 <div class="container">
   <div class="row custom-wrapper">
-
     <!-- Form starts -->
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-
       <div class="group-gap">
-
         <!-- Upload image -->
         <div class="avatar-upload avatar-preview">
           <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
         </div>
-
         <div class="group-gap ">
           <div class=' khaimah-title '>Welcome to Ras Al Khaimah's FIFA World Cup competition!</div>
-
-
           <div class=' khaimah-sub-title '>Are you ready to be a winner</div>
-
         </div>
-
-
         <!-- Full name -->
         <div formGroupName="fullName">
           <div class="mb-3" class='full-name-specific-styles'>
@@ -39,14 +30,12 @@
             </div>
           </div>
         </div>
-
         <!-- Mobile number -->
         <div class="mb-3" class='mobile-number-specific-styles'>
           <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}" class='label-margin'>Mobile
             number</label>
           <input type="text" class="form-control" formControlName="mobileNumber"
             [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
-
           <!-- error block -->
           <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxLength">
             <sup>*</sup>Phone number must be 10 digit long
@@ -59,34 +48,28 @@
           </div>
         </div>
       </div>
-
       <!-- Question Here -->
       <div class="group-gap">
         <h5 class="mb-3" class='label-specific-styles'>
-
           <!-- Italy is hosting FIFA World Cup 2022 -->
           {{questionDescription}}
-
         </h5>
         <div class="d-block my-3" class='label-specific-styles'>
           <li *ngFor="let item of answersNeeded;index as i;">
-            <label class="custom-control-label " (click)='setValue(i,item._id);'>{{item.Answer}}</label>
+            <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
+              (click)='setValue(i,item._id);'>{{item.Answer}}</label>
           </li>
-
         </div>
       </div>
-
       <!-- Submit Button -->
       <div class='submit-btn-container'>
         <button type="submit" class=" btn btn-danger btn-lg btn-block">Submit</button>
       </div>
     </form><!-- Form ends -->
-
     <!-- <div style='background:white; margin-top:20px'>
       form value is {{registrationForm.value | json}}
       param from backend is {{id}}
     </div> -->
-
   </div>
 
 </div>

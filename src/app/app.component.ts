@@ -30,7 +30,6 @@ export class AppComponent {
     private http: HttpClient
   ) {
     this.id = window.location.pathname.replace('/', '');
-
     if (!this.id) {
       this.getQuestion(this.id, true).subscribe(data => {
         this.id = data[0]._id.toString();
@@ -66,8 +65,11 @@ export class AppComponent {
     // @ts-ignore
     this.answerValue = answerId;
     this.selected = true;
-
-
+    let elem1 = document.querySelectorAll("[custom-control-label-active]");
+    elem1.forEach((data) => {
+      data.classList.remove("custom-control-label-active");
+    });
+    elem1[index].classList.add('custom-control-label-active');
   }
 
   // Getter method to access formcontrols
