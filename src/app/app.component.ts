@@ -21,12 +21,16 @@ export class AppComponent {
   yesValue: any;
   noValue: any;
   answerBooleanValue: any;
+  answersNeeded: any;
+
+
   constructor(
     public fb: FormBuilder,
     private location: Location,
     private http: HttpClient
   ) {
     this.id = window.location.pathname.replace('/', '');
+
     if (!this.id) {
       this.getQuestion(this.id, true).subscribe(data => {
         this.id = data[0]._id.toString();
@@ -44,6 +48,11 @@ export class AppComponent {
         this.questionDescription = data[0].question;
       });
     };
+
+    this.getAnswers().subscribe((answers) => {
+      this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+    });
+
   }
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
@@ -91,7 +100,6 @@ export class AppComponent {
     }
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
-
     if (error) {
       const url = `http://localhost:8080/questions`;
       return this.http.get<any>(url);
@@ -101,11 +109,11 @@ export class AppComponent {
       return this.http.get<any>(url);
 
     }
+  }
 
-
-
-
-
+  public getAnswers() {
+    const url = `http://localhost:8080/answers`;
+    return this.http.get<any>(url);
   }
   public postQuestion(questionID: any, answer: boolean = false, phoneNumber: any) {
     const PhoneNumberList = `http://localhost:8080/statistics`;
