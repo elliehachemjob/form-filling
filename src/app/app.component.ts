@@ -26,7 +26,7 @@ export class AppComponent {
   selected: any;
   correctAnswerID: any;
   isAnswerCorrect: any;
-
+  answeredBefore: any;
   constructor(
     public fb: FormBuilder,
     private location: Location,
@@ -86,16 +86,29 @@ export class AppComponent {
   // @ts-ignore
   onSubmit() {
     this.submitted = true;
-    if (this.registrationForm.valid) {
-      if (this.answerValue !== undefined) {
-        // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
-        this.postQuestion();
+
+    this.getUserAnswers().subscribe((answers) => {
+
+      let value = answers.filter((answer: any) => answer.phone.toString() === this.registrationForm.value.mobileNumber && answer.questionID === this.id);
+
+      if (value.length > 0) {
+        alert("The user have already answered before");
       } else {
-        alert("Please fill all the required fields to submit your value 2 ");
+        if (this.registrationForm.valid) {
+          if (this.answerValue !== undefined) {
+            // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
+            this.postQuestion();
+          } else {
+            alert("Please fill all the required fields to submit your value  ");
+          }
+        } else {
+          alert("Please fill all the required fields to submit your value ");
+        }
+
       }
-    } else {
-      alert("Please fill all the required fields to submit your value 1");
-    }
+    });
+
+
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
     if (error) {
@@ -121,6 +134,11 @@ export class AppComponent {
       this.isAnswerCorrect = false;
     }
 
+  }
+
+  getUserAnswers() {
+    const url = `http://localhost:8080/user-answers/`;
+    return this.http.get<any>(url);
   }
 
 
