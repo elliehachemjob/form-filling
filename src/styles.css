@@ -224,6 +224,10 @@ label {
  color: #E91E63;
 }
 
+.valid-feedback {
+ color: #91d4e6;
+}
+
 .btn-danger,
 body .btn-danger:hover {
  background: #312BC6;

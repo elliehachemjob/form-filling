@@ -27,6 +27,9 @@ export class AppComponent {
   correctAnswerID: any;
   isAnswerCorrect: any;
   answeredBefore: any;
+  isUserSubmittedBefore: any;
+  isUserRequiredFields: any;
+  isUserSuccessSubmitForm: any;
   constructor(
     public fb: FormBuilder,
     private location: Location,
@@ -91,20 +94,27 @@ export class AppComponent {
 
       let value = answers.filter((answer: any) => answer.phone.toString() === this.registrationForm.value.mobileNumber && answer.questionID === this.id);
 
+
+
       if (value.length > 0) {
-        alert("The user have already answered before");
+        this.isUserSubmittedBefore = true;
+        this.isUserSuccessSubmitForm = false;
       } else {
         if (this.registrationForm.valid) {
           if (this.answerValue !== undefined) {
             // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
             this.postQuestion();
+            this.isUserRequiredFields = false;
+            this.isUserSubmittedBefore = false;
+            this.isUserSuccessSubmitForm = true;
           } else {
-            alert("Please fill all the required fields to submit your value  ");
+            this.isUserRequiredFields = true;
+            this.isUserSuccessSubmitForm = false;
           }
         } else {
-          alert("Please fill all the required fields to submit your value ");
+          this.isUserRequiredFields = true;
+          this.isUserSuccessSubmitForm = false;
         }
-
       }
     });
 
