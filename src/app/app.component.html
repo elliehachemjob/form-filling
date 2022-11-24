@@ -7,13 +7,13 @@
         <div class="avatar-upload avatar-preview">
           <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
         </div>
-        <div class="group-gap ">
+        <div class="group-gap mobile-view ">
           <div class=' khaimah-title '>Welcome to Ras Al Khaimah's FIFA World Cup competition!</div>
           <div class=' khaimah-sub-title '>Are you ready to be a winner</div>
         </div>
         <!-- Full name -->
-        <div formGroupName="fullName">
-          <div class="mb-3" class='full-name-specific-styles'>
+        <div class="ellie" formGroupName="fullName">
+          <div class="mb-3" class='full-name-specific-styles half-width'>
             <label class='label-margin' [ngClass]="{'error': submitted && myForm.fullName.controls.fullName.errors}">
               Full name</label>
             <input type="text" class="form-control" formControlName="fullName"
@@ -31,44 +31,50 @@
           </div>
         </div>
         <!-- Mobile number -->
-        <div class="mb-3" class='mobile-number-specific-styles'>
-          <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}" class='label-margin'>Mobile
-            number</label>
-          <input type="text" class="form-control" formControlName="mobileNumber"
-            [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
-          <!-- error block -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxLength">
-            <sup>*</sup>Phone number must be 10 digit long
+        <div class='mb-3 mobile-number-specific-styles ellie  '>
+          <div class='full-name-specific-styles half-width '>
+            <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}" class='label-margin'>Mobile
+              number</label>
+            <input type="text" class="form-control" formControlName="mobileNumber"
+              [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
+            <!-- error block -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxLength">
+              <sup>*</sup>Phone number must be 10 digit long
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.required">
+              <sup>*</sup>Please enter your phone number
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.pattern">
+              <sup>*</sup>Please enter valid phone number
+            </div>
           </div>
-          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.required">
-            <sup>*</sup>Please enter your phone number
-          </div>
-          <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.pattern">
-            <sup>*</sup>Please enter valid phone number
-          </div>
+
         </div>
       </div>
       <!-- Question Here -->
       <div class="group-gap">
-        <h5 class="mb-3" class='label-specific-styles'>
-          <!-- Italy is hosting FIFA World Cup 2022 -->
-          {{questionDescription}}
-        </h5>
-        <div class="d-block my-3" class='label-specific-styles'>
-          <li *ngFor="let item of answersNeeded;index as i;">
-            <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
-              (click)='setValue(i,item._id);'>{{item.Answer}}</label>
-          </li>
+        <div class='full-name-specific-styles'>
+          <h5 class="mb-3" class='label-specific-styles'>
+            <!-- Italy is hosting FIFA World Cup 2022 -->
+            {{questionDescription}}
+          </h5>
+          <div class="d-block my-3">
+            <li class="ellie" *ngFor="let item of answersNeeded;index as i;">
+              <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
+                (click)='setValue(i,item._id);'>{{item.Answer}}</label>
+            </li>
+          </div>
+          <div class="invalid-feedback" *ngIf="isUserSubmittedBefore">
+            <sup>*</sup>The user have already answered before
+          </div>
+          <div class="invalid-feedback" *ngIf="isUserRequiredFields">
+            <sup>*</sup>Please fill all the required fields to submit your value
+          </div>
+          <div class="valid-feedback" *ngIf="isUserSuccessSubmitForm">
+            Successfully submitted the form
+          </div>
         </div>
-        <div class="invalid-feedback" *ngIf="isUserSubmittedBefore">
-          <sup>*</sup>The user have already answered before
-        </div>
-        <div class="invalid-feedback" *ngIf="isUserRequiredFields">
-          <sup>*</sup>Please fill all the required fields to submit your value
-        </div>
-        <div class="valid-feedback" *ngIf="isUserSuccessSubmitForm">
-          Successfully submitted the form
-        </div>
+
       </div>
       <!-- Submit Button -->
       <div class='submit-btn-container'>

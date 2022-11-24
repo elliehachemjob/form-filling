@@ -40,7 +40,7 @@ h5 {
 }
 
 .custom-wrapper {
- max-width: 460px;
+ max-width: 500px;
  margin: 0 auto 150px;
 }
 
@@ -318,14 +318,41 @@ body {
 }
 
 
+
+.khaimah-title {
+ color: white;
+ font-weight: bold !important;
+ margin-left: 50px;
+ font-size: 26px;
+ line-height: 1.5em;
+ width: calc(100% - 100px)
+}
+
+
+.khaimah-sub-title {
+ color: white;
+ font-weight: 100 !important;
+ margin-left: 50px;
+ font-size: 24px;
+ width: calc(100% - 100px)
+}
+
+
 /* Just for Mobile version */
 @media only screen and (max-width: 767px) {
+ .ellie {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+ }
+
  .custom-control-label {
-  width: 60%;
+  width: 50%;
  }
 
  .form-control {
-  width: 60%;
+  width: 100%;
  }
 
  label {
@@ -337,13 +364,14 @@ body {
 
  .label-bold {}
 
- .full-name-specific-styles,
- .mobile-number-specific-styles,
  .label-specific-styles {
   /* margin-left: 50px; */
-  display: flex;
+  /* display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; */
+  text-align: center;
+  text-align: center;
+  margin: 5px 50px;
  }
 
  .label-margin {
@@ -366,23 +394,34 @@ body {
   flex-direction: column;
 
  }
-}
 
-.khaimah-title {
- color: white;
- font-weight: bold !important;
- margin-left: 50px;
- font-size: 20px;
- line-height: 1.5em;
- width: calc(100% - 100px)
-}
+ .custom-control-label {
+  margin-top: 10px;
+ }
 
+ .half-width {
+  width: 50%;
+ }
 
-.khaimah-sub-title {
- color: white;
- font-weight: 100 !important;
- margin-left: 50px;
- font-size: 20px;
+ .mobile-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ }
+
+ .khaimah-title {
+  font-size: 18px;
+  text-align: center;
+  margin: 5px 50px;
+ }
+
+ .khaimah-sub-title {
+  font-size: 16px;
+  text-align: center;
+  margin: 5px 50px;
+ }
+
 }
 
 
@@ -396,8 +435,7 @@ body {
  background-color: rgb(156, 175, 144);
  display: block;
  border-radius: 50px;
- height: 30px;
- margin-top: 10px;
+ height: 32px;
  padding-top: 7px;
  padding-left: 25px;
  color: black;
