@@ -348,7 +348,7 @@ body {
  }
 
  .custom-control-label {
-  width: 50%;
+  width: 80%;
  }
 
  .form-control {
@@ -400,7 +400,7 @@ body {
  }
 
  .half-width {
-  width: 50%;
+  width: 80%;
  }
 
  .mobile-view {
@@ -475,4 +475,9 @@ body {
 
 .custom-control-label-active {
  background: #E91E63
+}
+
+
+[dir=rtl] .custom-control-label {
+ padding-right: 25px;
 }

@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -30,37 +29,88 @@ export class AppComponent {
   isUserSubmittedBefore: any;
   isUserRequiredFields: any;
   isUserSuccessSubmitForm: any;
+  languageRequested: any = 'en';
+  userSelected: any = false;
   constructor(
     public fb: FormBuilder,
     private location: Location,
     private http: HttpClient
   ) {
-    this.id = window.location.pathname.replace('/', '');
-    if (!this.id) {
-      this.getQuestion(this.id, true).subscribe(data => {
-        this.id = data[0]._id.toString();
-        this.questionDescription = data[0].question;
-        this.location.replaceState(`/${this.id}`);
+
+    // @ts-ignore
+    this.languageRequested = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+
+    if (this.languageRequested === "ar" || this.languageRequested === "en" || this.languageRequested === "AR" || this.languageRequested === "EN") this.userSelected = true; else this.languageRequested = "en";
+
+
+    if (this.userSelected) {
+
+
+
+
+      this.id = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+      this.id = this.id.replace('/', '');
+
+
+      if (!this.id) {
+        this.getQuestion(this.id, true).subscribe(data => {
+          this.id = data[0]._id.toString();
+          if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
+          this.location.replaceState(`/${this.id}/${this.languageRequested}`);
+        });
+      }
+
+      this.location.replaceState(`/${this.id}/${this.languageRequested}`);
+      this.getQuestion(this.id).subscribe(data => {
+        if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data.QuestionAR; else this.questionDescription = data.QuestionEN;
+
+
+      });
+      if (this.questionDescription === undefined) {
+        this.getQuestion(this.id, true).subscribe(data => {
+          if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
+        });
+      };
+
+      this.getAnswers().subscribe((answers) => {
+        this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+        if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
+
+        let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
+        this.correctAnswerID = correctAnswer[0]._id;
+      });
+
+
+    }
+    else {
+      this.id = window.location.pathname.replace('/', '');
+      if (!this.id) {
+        this.getQuestion(this.id, true).subscribe(data => {
+          this.id = data[0]._id.toString();
+          this.questionDescription = data[0].QuestionEN;
+          this.location.replaceState(`/${this.id}`);
+        });
+      }
+
+      this.location.replaceState(`/${this.id}`);
+      this.getQuestion(this.id).subscribe(data => {
+        this.questionDescription = data.QuestionEN;
+      });
+      if (this.questionDescription === undefined) {
+        this.getQuestion(this.id, true).subscribe(data => {
+          this.questionDescription = data[0].QuestionEN;
+        });
+      };
+
+      this.getAnswers().subscribe((answers) => {
+        this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+        if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
+        let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
+        this.correctAnswerID = correctAnswer[0]._id;
+
       });
     }
-    this.location.replaceState(`/${this.id}`);
 
-    this.getQuestion(this.id).subscribe(data => {
-      this.questionDescription = data.question;
-    });
-    if (this.questionDescription === undefined) {
-      this.getQuestion(this.id, true).subscribe(data => {
-        this.questionDescription = data[0].question;
-      });
-    };
-
-    this.getAnswers().subscribe((answers) => {
-      this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
-      if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
-      let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
-      this.correctAnswerID = correctAnswer[0]._id;
-
-    });
 
   }
   /*##################### Registration Form #####################*/
@@ -90,13 +140,8 @@ export class AppComponent {
   // @ts-ignore
   onSubmit() {
     this.submitted = true;
-
     this.getUserAnswers().subscribe((answers) => {
-
       let value = answers.filter((answer: any) => answer.phone.toString() === this.registrationForm.value.mobileNumber && answer.questionID === this.id);
-
-
-
       if (value.length > 0) {
         this.isUserSubmittedBefore = true;
         this.isUserSuccessSubmitForm = false;
@@ -131,13 +176,10 @@ export class AppComponent {
       return this.http.get<any>(url);
     }
   }
-
   public getAnswers() {
     const url = `http://localhost:1337/answers`;
     return this.http.get<any>(url);
   }
-
-
   checkIfAnswerCorrect() {
     if (this.answerValue === this.correctAnswerID) {
       this.isAnswerCorrect = true;
@@ -146,37 +188,32 @@ export class AppComponent {
     }
 
   }
-
   getUserAnswers() {
     const url = `http://localhost:1337/user-answers/`;
     return this.http.get<any>(url);
   }
-
-
   public postQuestion() {
     this.checkIfAnswerCorrect();
     let answer;
     if (this.isAnswerCorrect) answer = 1; else answer = 0;
 
-
-    this.http.post<any>(`http://localhost:1337/user-answers/`, {
+    this.languageRequested.toLowerCase() === "en" ? this.http.post<any>(`http://localhost:1337/user-answers/`, {
       "Name": this.registrationForm.value.fullName.fullName,
       "phone": this.registrationForm.value.mobileNumber,
       "questionID": this.id,
-      "question": this.questionDescription,
+      'QuestionEN': this.questionDescription,
       "answerId": this.answerValue,
-      "answer": answer
+    }).subscribe() : this.http.post<any>(`http://localhost:1337/user-answers/`, {
+      "Name": this.registrationForm.value.fullName.fullName,
+      "phone": this.registrationForm.value.mobileNumber,
+      "questionID": this.id,
+      "QuestionAR": this.questionDescription,
+      "answerId": this.answerValue,
     }).subscribe();
 
 
+
+
+
   }
-
-
-
-
-
-
-
-
-
 }
