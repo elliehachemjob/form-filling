@@ -56,6 +56,7 @@ export class AppComponent {
 
     this.getAnswers().subscribe((answers) => {
       this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+      if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
       let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
       this.correctAnswerID = correctAnswer[0]._id;
 
@@ -122,17 +123,17 @@ export class AppComponent {
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
     if (error) {
-      const url = `http://localhost:8080/questions`;
+      const url = `http://localhost:1337/questions`;
       return this.http.get<any>(url);
     }
     else {
-      const url = `http://localhost:8080/questions/${id}`;
+      const url = `http://localhost:1337/questions/${id}`;
       return this.http.get<any>(url);
     }
   }
 
   public getAnswers() {
-    const url = `http://localhost:8080/answers`;
+    const url = `http://localhost:1337/answers`;
     return this.http.get<any>(url);
   }
 
@@ -147,7 +148,7 @@ export class AppComponent {
   }
 
   getUserAnswers() {
-    const url = `http://localhost:8080/user-answers/`;
+    const url = `http://localhost:1337/user-answers/`;
     return this.http.get<any>(url);
   }
 
@@ -158,7 +159,7 @@ export class AppComponent {
     if (this.isAnswerCorrect) answer = 1; else answer = 0;
 
 
-    this.http.post<any>(`http://localhost:8080/user-answers/`, {
+    this.http.post<any>(`http://localhost:1337/user-answers/`, {
       "Name": this.registrationForm.value.fullName.fullName,
       "phone": this.registrationForm.value.mobileNumber,
       "questionID": this.id,
