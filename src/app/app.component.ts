@@ -1,9 +1,9 @@
 
-import { Component, } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -140,7 +140,7 @@ export class AppComponent {
       this.submitted = true;
     }, 10);
   }
-  public getQuestion(id: any, error: boolean = false): Observable<any> {
+  public getQuestion(id: any, error: boolean = false) {
     if (error) {
       const url = `http://localhost:1337/questions`;
       return this.http.get<any>(url);
