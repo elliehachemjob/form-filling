@@ -203,12 +203,14 @@ export class AppComponent {
       "questionID": this.id,
       'QuestionEN': this.questionDescription,
       "answerId": this.answerValue,
+      "answer": answer
     }).subscribe() : this.http.post<any>(`http://localhost:1337/user-answers/`, {
       "Name": this.registrationForm.value.fullName.fullName,
       "phone": this.registrationForm.value.mobileNumber,
       "questionID": this.id,
       "QuestionAR": this.questionDescription,
       "answerId": this.answerValue,
+      "answer": answer
     }).subscribe();
 
 
