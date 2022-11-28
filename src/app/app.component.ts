@@ -36,22 +36,12 @@ export class AppComponent {
     private location: Location,
     private http: HttpClient
   ) {
-
     // @ts-ignore
     this.languageRequested = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
-
     if (this.languageRequested === "ar" || this.languageRequested === "en" || this.languageRequested === "AR" || this.languageRequested === "EN") this.userSelected = true; else this.languageRequested = "en";
-
-
     if (this.userSelected) {
-
-
-
-
       this.id = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
       this.id = this.id.replace('/', '');
-
-
       if (!this.id) {
         this.getQuestion(this.id, true).subscribe(data => {
           this.id = data[0]._id.toString();
@@ -59,11 +49,9 @@ export class AppComponent {
           this.location.replaceState(`/${this.id}/${this.languageRequested}`);
         });
       }
-
       this.location.replaceState(`/${this.id}/${this.languageRequested}`);
       this.getQuestion(this.id).subscribe(data => {
         if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data.QuestionAR; else this.questionDescription = data.QuestionEN;
-
 
       });
       if (this.questionDescription === undefined) {
@@ -71,16 +59,12 @@ export class AppComponent {
           if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
         });
       };
-
       this.getAnswers().subscribe((answers) => {
         this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
         if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
-
         let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
         this.correctAnswerID = correctAnswer[0]._id;
       });
-
-
     }
     else {
       this.id = window.location.pathname.replace('/', '');
@@ -91,7 +75,6 @@ export class AppComponent {
           this.location.replaceState(`/${this.id}`);
         });
       }
-
       this.location.replaceState(`/${this.id}`);
       this.getQuestion(this.id).subscribe(data => {
         this.questionDescription = data.QuestionEN;
@@ -101,17 +84,13 @@ export class AppComponent {
           this.questionDescription = data[0].QuestionEN;
         });
       };
-
       this.getAnswers().subscribe((answers) => {
         this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
         if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
         let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
         this.correctAnswerID = correctAnswer[0]._id;
-
       });
     }
-
-
   }
   /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
@@ -163,8 +142,6 @@ export class AppComponent {
         }
       }
     });
-
-
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
     if (error) {
@@ -186,7 +163,6 @@ export class AppComponent {
     } else {
       this.isAnswerCorrect = false;
     }
-
   }
   getUserAnswers() {
     const url = `http://localhost:1337/user-answers/`;
@@ -212,10 +188,5 @@ export class AppComponent {
       "answerId": this.answerValue,
       "answer": answer
     }).subscribe();
-
-
-
-
-
   }
 }
