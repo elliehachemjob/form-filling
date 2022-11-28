@@ -91,7 +91,9 @@
       </div>
       <!-- Submit Button -->
       <div class='submit-btn-container'>
-        <button type="submit" class=" btn btn-danger btn-lg btn-block">{{languageRequested.toLowerCase() === "en" ?
+        <button type="submit" class=" btn btn-danger btn-lg btn-block"
+          [disabled]=submitted>{{languageRequested.toLowerCase() ===
+          "en" ?
           "SUBMIT" :
           "إرسال"}}</button>
       </div>

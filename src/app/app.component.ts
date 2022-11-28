@@ -4,18 +4,20 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-
 export class AppComponent {
-  submitted = false;
+  private _submitted = false;
+  public get submitted() {
+    return this._submitted;
+  }
+  public set submitted(value) {
+    this._submitted = value;
+  }
   id: any;
-  imageUrl: any = '../assets/rak-logo.png';
-  firstValueSelected: any;
-  secondValueSelected: any;
+  imageUrl: any = '../assets/rak-lsubmittedogo.png';
   questionDescription: any;
   reviewCount: any;
   yesValue: any;
@@ -36,7 +38,6 @@ export class AppComponent {
     private location: Location,
     private http: HttpClient
   ) {
-    // @ts-ignore
     this.languageRequested = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
     if (this.languageRequested === "ar" || this.languageRequested === "en" || this.languageRequested === "AR" || this.languageRequested === "EN") this.userSelected = true; else this.languageRequested = "en";
     if (this.userSelected) {
@@ -52,7 +53,6 @@ export class AppComponent {
       this.location.replaceState(`/${this.id}/${this.languageRequested}`);
       this.getQuestion(this.id).subscribe(data => {
         if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data.QuestionAR; else this.questionDescription = data.QuestionEN;
-
       });
       if (this.questionDescription === undefined) {
         this.getQuestion(this.id, true).subscribe(data => {
@@ -92,7 +92,6 @@ export class AppComponent {
       });
     }
   }
-  /*##################### Registration Form #####################*/
   registrationForm = this.fb.group({
     file: [null],
     fullName: this.fb.group({
@@ -101,7 +100,6 @@ export class AppComponent {
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
   }) as any;
   setValue(index: any, answerId: any) {
-    // @ts-ignore
     this.answerValue = answerId;
     this.selected = true;
     let elem1 = document.querySelectorAll("[custom-control-label-active]");
@@ -110,13 +108,9 @@ export class AppComponent {
     });
     elem1[index].classList.add('custom-control-label-active');
   }
-
-  // Getter method to access formcontrols
   get myForm() {
     return this.registrationForm.controls;
   }
-  // Submit Registration Form
-  // @ts-ignore
   onSubmit() {
     this.submitted = true;
     this.getUserAnswers().subscribe((answers) => {
@@ -127,7 +121,6 @@ export class AppComponent {
       } else {
         if (this.registrationForm.valid) {
           if (this.answerValue !== undefined) {
-            // this.postQuestion(this.id, this.answerValue, this.registrationForm.value.mobileNumber);
             this.postQuestion();
             this.isUserRequiredFields = false;
             this.isUserSubmittedBefore = false;
@@ -142,6 +135,10 @@ export class AppComponent {
         }
       }
     });
+    this.submitted = false;
+    setTimeout(() => {
+      this.submitted = true;
+    }, 10);
   }
   public getQuestion(id: any, error: boolean = false): Observable<any> {
     if (error) {
@@ -170,21 +167,14 @@ export class AppComponent {
   }
   public postQuestion() {
     this.checkIfAnswerCorrect();
-    let answer;
+    let answer: any;
     if (this.isAnswerCorrect) answer = 1; else answer = 0;
-
-    this.languageRequested.toLowerCase() === "en" ? this.http.post<any>(`http://localhost:1337/user-answers/`, {
+    this.http.post<any>(`http://localhost:1337/user-answers/`, {
       "Name": this.registrationForm.value.fullName.fullName,
       "phone": this.registrationForm.value.mobileNumber,
       "questionID": this.id,
-      'QuestionEN': this.questionDescription,
-      "answerId": this.answerValue,
-      "answer": answer
-    }).subscribe() : this.http.post<any>(`http://localhost:1337/user-answers/`, {
-      "Name": this.registrationForm.value.fullName.fullName,
-      "phone": this.registrationForm.value.mobileNumber,
-      "questionID": this.id,
-      "QuestionAR": this.questionDescription,
+      "QuestionEN": this.languageRequested.toLowerCase() === "en" ? this.questionDescription : "",
+      "QuestionAR": this.languageRequested.toLowerCase() === "en" ? "" : this.questionDescription,
       "answerId": this.answerValue,
       "answer": answer
     }).subscribe();
