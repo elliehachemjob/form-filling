@@ -172,7 +172,7 @@ export class AppComponent {
   }
   public getQuestion(id: any, error: boolean = false) {
     if (error) return this.http.get<any>(this.questionsUrl);
-    else return this.http.get<any>(`${this.questionsUrl}${id}`);
+    else return this.http.get<any>(`${this.questionsUrl}/${id}`);
   }
   public getAnswers() {
     return this.http.get<any>(this.answersUrl);
