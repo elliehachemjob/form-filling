@@ -5,7 +5,8 @@
       <div class="group-gap">
         <!-- Upload image -->
         <div class="avatar-upload avatar-preview">
-          <img width="200" height="200" style="background: transparent" src="../assets/rak-logo.png" />
+          <img alt="Ras Al Khaimah" width='100%' height='100%' style="background: transparent;"
+            src="../assets/rak-logo.png" />
         </div>
         <div class="group-gap mobile-view">
           <div class="khaimah-title">
@@ -26,13 +27,13 @@
         <!-- Full name -->
         <div class="ellie">
           <div class="mb-3" class="full-name-specific-styles half-width">
-            <label class="label-margin" [ngClass]="{ error: submitted && myForm.fullName.errors }">
+            <label id='fullName' class="label-margin" [ngClass]="{ error: submitted && myForm.fullName.errors }">
               {{
               languageRequested.toLowerCase() === "en"
               ? "Full name"
               : "الاسم الكامل"
               }}</label>
-            <input type="text" class="form-control" formControlName="fullName"
+            <input aria-labelledBy='fullName' type="text" class="form-control" formControlName="fullName"
               [ngClass]="{ error: submitted && myForm.fullName.errors }" />
             <!-- error block -->
             <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.errors?.required">
@@ -55,7 +56,8 @@
         <!-- Mobile number -->
         <div class="mb-3 mobile-number-specific-styles ellie">
           <div class="full-name-specific-styles half-width">
-            <label [ngClass]="{ error: submitted && myForm.mobileNumber.errors }" class="label-margin">
+            <label label id='mobileNumber' [ngClass]="{ error: submitted && myForm.mobileNumber.errors }"
+              class="label-margin">
               {{
               languageRequested.toLowerCase() === "en"
               ? "Mobile number"
@@ -63,7 +65,7 @@
               }}
             </label>
 
-            <input type="text" class="form-control" formControlName="mobileNumber"
+            <input aria-labelledBy='mobileNumber' type="text" class="form-control" formControlName="mobileNumber"
               [ngClass]="{ error: submitted && myForm.mobileNumber.errors }" />
             <!-- error block -->
             <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.maxlength">
@@ -109,14 +111,16 @@
             {{ questionDescription }}
           </h5>
           <div class="d-block my-3">
-            <li class="ellie" *ngFor="let item of answersNeeded; index as i">
-              <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
-                (click)="setValue(i, item._id)">{{
-                languageRequested.toLowerCase() === "en"
-                ? item.AnswerEN
-                : item.AnswerAR
-                }}</label>
-            </li>
+            <ul class='ul-styles'>
+              <li class="ellie" *ngFor="let item of answersNeeded; index as i">
+                <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
+                  (click)="setValue(i, item._id)">{{
+                  languageRequested.toLowerCase() === "en"
+                  ? item.AnswerEN
+                  : item.AnswerAR
+                  }}</label>
+              </li>
+            </ul>
           </div>
           <div class="invalid-feedback" *ngIf="isUserSubmittedBefore">
             <sup>*</sup>The user have already answered before

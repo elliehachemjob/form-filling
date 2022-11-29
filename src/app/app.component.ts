@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   submitted = false;
   id: any;
-  imageUrl: any = '../assets/rak-lsubmittedogo.png';
   questionDescription: any;
   reviewCount: any;
   yesValue: any;
@@ -35,8 +35,10 @@ export class AppComponent {
   constructor(
     public fb: FormBuilder,
     private location: Location,
-    private http: HttpClient
+    private http: HttpClient,
+    private meta: Meta
   ) {
+    this.meta.addTag({ name: 'description', content: 'Ras Al Khaimah' });
     this.languageRequested = window.location.pathname.substring(
       window.location.pathname.lastIndexOf('/') + 1
     );
