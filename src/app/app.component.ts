@@ -34,35 +34,32 @@ export class AppComponent {
   ) {
     this.languageRequested = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
     if (this.languageRequested === "ar" || this.languageRequested === "en" || this.languageRequested === "AR" || this.languageRequested === "EN") this.userSelected = true; else this.languageRequested = "en";
-    if (this.userSelected) {
-      this.id = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-      this.id = this.id.replace('/', '');
-    } else {
-      this.id = window.location.pathname.replace('/', '');
-    }
+    if (this.userSelected) this.id = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')).replace('/', ''); else this.id = window.location.pathname.replace('/', '');
+
     if (!this.id) {
       this.getQuestion(this.id, true).subscribe(data => {
         this.id = data[0]._id.toString();
         if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
         this.location.replaceState(`/${this.id}/${this.languageRequested}`);
       });
+    } else {
+      this.location.replaceState(`/${this.id}/${this.languageRequested}`);
+      this.getQuestion(this.id).subscribe(
+        data => { if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data.QuestionAR; else this.questionDescription = data.QuestionEN; },
+        err => {
+          this.getQuestion(this.id, true).subscribe(data => {
+            if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
+            this.location.replaceState(`/${data[0].id}/${this.languageRequested}`);
+          });
+        }
+      );
+      this.getAnswers().subscribe((answers) => {
+        this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+        if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
+        let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
+        this.correctAnswerID = correctAnswer[0]._id;
+      });
     }
-    this.location.replaceState(`/${this.id}/${this.languageRequested}`);
-    this.getQuestion(this.id).subscribe(
-      data => { if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data.QuestionAR; else this.questionDescription = data.QuestionEN; },
-      err => {
-        this.getQuestion(this.id, true).subscribe(data => {
-          if (this.languageRequested === "ar" || this.languageRequested === "AR") this.questionDescription = data[0].QuestionAR; else this.questionDescription = data[0].QuestionEN;
-          this.location.replaceState(`/${data[0].id}/${this.languageRequested}`);
-        });
-      }
-    );
-    this.getAnswers().subscribe((answers) => {
-      this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
-      if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
-      let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
-      this.correctAnswerID = correctAnswer[0]._id;
-    });
   }
   registrationForm = this.fb.group({
     file: [null],
