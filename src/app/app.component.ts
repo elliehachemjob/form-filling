@@ -110,7 +110,7 @@ export class AppComponent {
         Validators.required,
         Validators.minLength(2),
         Validators.pattern(
-          '^[آ-یA-z]{2,}( [آ-یA-z]{2,})+([آ-یA-z]|[ ]?)|[_A-z0-9]*((-|s)*[_A-z0-9])$'
+          '^[آ-یA-z]{2,}( [آ-یA-z]{2,})+([آ-یA-z]|[ ]?)|[_A-z]*((-|s)*[_A-z])$'
         ),
       ],
     ],
