@@ -53,13 +53,14 @@ export class AppComponent {
           });
         }
       );
-      this.getAnswers().subscribe((answers) => {
-        this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
-        if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
-        let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
-        this.correctAnswerID = correctAnswer[0]._id;
-      });
     }
+    this.getAnswers().subscribe((answers) => {
+      this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
+      if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
+      let correctAnswer = this.answersNeeded.filter((answer: any) => answer.correctFlag === 0);
+      this.correctAnswerID = correctAnswer[0]._id;
+    });
+
   }
   registrationForm = this.fb.group({
     file: [null],
