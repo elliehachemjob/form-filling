@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -32,12 +32,27 @@ export class AppComponent {
   questionsUrl = 'http://localhost:1337/questions';
   submittedSuccessfully: boolean = false;
 
+
+
+  check() {
+    if (!isDevMode()) {
+      alert("done");
+      {
+        this.answersUrl = `https://6386238e875ca3273d5150d8.mockapi.io/answers`;
+        this.userAnswersUrl = `https://6386238e875ca3273d5150d8.mockapi.io/user-answers`;
+        this.questionsUrl = 'https://6386238e875ca3273d5150d8.mockapi.io/question';
+      }
+    }
+  }
+
+
   constructor(
     public fb: FormBuilder,
     private location: Location,
     private http: HttpClient,
     private meta: Meta
   ) {
+    this.check();
     this.meta.addTag({ name: 'description', content: 'Ras Al Khaimah' });
     this.languageRequested = window.location.pathname.substring(
       window.location.pathname.lastIndexOf('/') + 1
@@ -58,7 +73,7 @@ export class AppComponent {
 
     if (!this.id) {
       this.getQuestion(this.id, true).subscribe((data) => {
-        this.id = data[0]._id.toString();
+        this.id = data[0].id.toString();
         if (
           this.languageRequested === this.lang[1] ||
           this.languageRequested === this.lang[1].toLowerCase()
@@ -102,7 +117,7 @@ export class AppComponent {
       let correctAnswer = this.answersNeeded.filter(
         (answer: any) => answer.correctFlag === 0
       );
-      this.correctAnswerID = correctAnswer[0]._id;
+      this.correctAnswerID = correctAnswer[0].id;
     });
   }
   registrationForm = this.fb.group({
