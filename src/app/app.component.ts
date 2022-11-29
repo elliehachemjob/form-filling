@@ -9,13 +9,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  private _submitted = false;
-  public get submitted() {
-    return this._submitted;
-  }
-  public set submitted(value) {
-    this._submitted = value;
-  }
+  submitted = false;
   id: any;
   imageUrl: any = '../assets/rak-lsubmittedogo.png';
   questionDescription: any;
@@ -135,10 +129,6 @@ export class AppComponent {
         }
       }
     });
-    this.submitted = false;
-    setTimeout(() => {
-      this.submitted = true;
-    }, 10);
   }
   public getQuestion(id: any, error: boolean = false) {
     if (error) {
