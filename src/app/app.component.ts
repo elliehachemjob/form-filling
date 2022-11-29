@@ -95,9 +95,8 @@ export class AppComponent {
       this.answersNeeded = answers.filter(
         (answer: any) => answer.questionID === this.id
       );
-      if (this.answersNeeded.length === 0) {
-        this.answersNeeded.push(answers[0], answers[1]);
-      }
+      if (this.answersNeeded.length === 0) this.answersNeeded.push(answers[0], answers[1]);
+
       let correctAnswer = this.answersNeeded.filter(
         (answer: any) => answer.correctFlag === 0
       );
@@ -139,7 +138,6 @@ export class AppComponent {
     return this.registrationForm.controls;
   }
   onSubmit() {
-    console.log(this.myForm.mobileNumber.errors?.maxLength, 'test');
     this.submitted = true;
     this.getUserAnswers().subscribe((answers) => {
       let value = answers.filter(
@@ -171,22 +169,15 @@ export class AppComponent {
     });
   }
   public getQuestion(id: any, error: boolean = false) {
-    if (error) {
-      return this.http.get<any>(this.questionsUrl);
-    } else {
-      const url = `${this.questionsUrl}${id}`;
-      return this.http.get<any>(url);
-    }
+    if (error) return this.http.get<any>(this.questionsUrl);
+    else return this.http.get<any>(`${this.questionsUrl}${id}`);
   }
   public getAnswers() {
     return this.http.get<any>(this.answersUrl);
   }
   checkIfAnswerCorrect() {
-    if (this.answerValue === this.correctAnswerID) {
-      this.isAnswerCorrect = true;
-    } else {
-      this.isAnswerCorrect = false;
-    }
+    if (this.answerValue === this.correctAnswerID) this.isAnswerCorrect = true;
+    else this.isAnswerCorrect = false;
   }
   getUserAnswers() {
     return this.http.get<any>(this.userAnswersUrl);
