@@ -1,41 +1,48 @@
-<div dir='{{languageRequested.toLowerCase() === "en" ? "ltr": "rtl"}}' class="container">
+<div dir="{{ languageRequested.toLowerCase() === 'en' ? 'ltr' : 'rtl' }}" class="container">
   <div class="row custom-wrapper">
     <!-- Form starts -->
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="group-gap">
         <!-- Upload image -->
         <div class="avatar-upload avatar-preview">
-          <img width='200' height='200' style="background:transparent" src="../assets/rak-logo.png">
+          <img width="200" height="200" style="background: transparent" src="../assets/rak-logo.png" />
         </div>
-        <div class="group-gap mobile-view ">
-          <div class=' khaimah-title '>
-
-            {{languageRequested.toLowerCase() === "en" ?
-            "Welcome to Ras Al Khaimah's FIFA World Cup competition!" :
-            "مرحبًا بكم في مسابقة كأس العالم لكرة القدم برأس الخيمة!"}}
-
+        <div class="group-gap mobile-view">
+          <div class="khaimah-title">
+            {{
+            languageRequested.toLowerCase() === "en"
+            ? "Welcome to Ras Al Khaimah's FIFA World Cup competition!"
+            : "مرحبًا بكم في مسابقة كأس العالم لكرة القدم برأس الخيمة!"
+            }}
           </div>
-          <div class=' khaimah-sub-title '> {{languageRequested.toLowerCase() === "en" ?
-            "Are you ready to be a winner" :
-            "هل انت جاهز لتكون فائز"}}</div>
+          <div class="khaimah-sub-title">
+            {{
+            languageRequested.toLowerCase() === "en"
+            ? "Are you ready to be a winner"
+            : "هل انت جاهز لتكون فائز"
+            }}
+          </div>
         </div>
         <!-- Full name -->
         <div class="ellie">
-          <div class="mb-3" class='full-name-specific-styles half-width'>
-            <label class='label-margin' [ngClass]="{'error': submitted && myForm.fullName.errors}">
-              {{languageRequested.toLowerCase() === "en" ?
-              "Full name" :
-              "الاسم الكامل"}}</label>
+          <div class="mb-3" class="full-name-specific-styles half-width">
+            <label class="label-margin" [ngClass]="{ error: submitted && myForm.fullName.errors }">
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Full name"
+              : "الاسم الكامل"
+              }}</label>
             <input type="text" class="form-control" formControlName="fullName"
-              [ngClass]="{'error': submitted && myForm.fullName.errors}">
+              [ngClass]="{ error: submitted && myForm.fullName.errors }" />
             <!-- error block -->
             <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.errors?.required">
               <sup>*</sup>
 
-              {{languageRequested.toLowerCase() === "en" ?
-              "Enter your name" :
-              "أدخل أسمك"}}
-
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Enter your name"
+              : "أدخل أسمك"
+              }}
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.errors?.minlength">
               <sup>*</sup>Name must be 2 characters long
@@ -46,52 +53,69 @@
           </div>
         </div>
         <!-- Mobile number -->
-        <div class='mb-3 mobile-number-specific-styles ellie  '>
-          <div class='full-name-specific-styles half-width '>
-            <label [ngClass]="{'error': submitted && myForm.mobileNumber.errors}" class='label-margin'>
-              {{languageRequested.toLowerCase() === "en" ?
-              "Mobile number" :
-              "رقم الهاتف "}} </label>
+        <div class="mb-3 mobile-number-specific-styles ellie">
+          <div class="full-name-specific-styles half-width">
+            <label [ngClass]="{ error: submitted && myForm.mobileNumber.errors }" class="label-margin">
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Mobile number"
+              : "رقم الهاتف "
+              }}
+            </label>
 
             <input type="text" class="form-control" formControlName="mobileNumber"
-              [ngClass]="{'error': submitted && myForm.mobileNumber.errors}">
+              [ngClass]="{ error: submitted && myForm.mobileNumber.errors }" />
             <!-- error block -->
             <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors.maxlength">
-              <sup>*</sup> {{languageRequested.toLowerCase() === "en" ?
-              "Phone number must be ١٢ digit long" :
-              "يجب أن يتكون رقم الهاتف من ١٢ أرقام "}}
+              <sup>*</sup>
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Phone number must be ١٢ digit long"
+              : "يجب أن يتكون رقم الهاتف من ١٢ أرقام "
+              }}
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors.minlength">
-              <sup>*</sup> {{languageRequested.toLowerCase() === "en" ?
-              "the number should not be less than 8" :
-              "يجب ألا يقل الرقم عن ٨ "}}
+              <sup>*</sup>
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "the number should not be less than 8"
+              : "يجب ألا يقل الرقم عن ٨ "
+              }}
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.required">
-              <sup>*</sup> {{languageRequested.toLowerCase() === "en" ?
-              "Please enter your phone number" :
-              "يرجى إدخال رقم الهاتف الخاص بك "}}
+              <sup>*</sup>
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Please enter your phone number"
+              : "يرجى إدخال رقم الهاتف الخاص بك "
+              }}
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.mobileNumber.errors?.pattern">
-              <sup>*</sup> {{languageRequested.toLowerCase() === "en" ?
-              "Please enter valid phone number" :
-              "الرجاء إدخال رقم هاتف صحيح "}}
+              <sup>*</sup>
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? "Please enter valid phone number"
+              : "الرجاء إدخال رقم هاتف صحيح "
+              }}
             </div>
           </div>
-
         </div>
       </div>
       <!-- Question Here -->
       <div class="group-gap">
-        <div class='full-name-specific-styles'>
-          <h5 class="mb-3" class='label-specific-styles'>
+        <div class="full-name-specific-styles">
+          <h5 class="mb-3" class="label-specific-styles">
             <!-- Italy is hosting FIFA World Cup 2022 -->
-            {{questionDescription}}
+            {{ questionDescription }}
           </h5>
           <div class="d-block my-3">
-            <li class="ellie" *ngFor="let item of answersNeeded;index as i;">
+            <li class="ellie" *ngFor="let item of answersNeeded; index as i">
               <label [attr.custom-control-label-active]="i" class="custom-control-label specialHere"
-                (click)='setValue(i,item._id);'>{{languageRequested.toLowerCase() === "en" ? item.AnswerEN :
-                item.AnswerAR}}</label>
+                (click)="setValue(i, item._id)">{{
+                languageRequested.toLowerCase() === "en"
+                ? item.AnswerEN
+                : item.AnswerAR
+                }}</label>
             </li>
           </div>
           <div class="invalid-feedback" *ngIf="isUserSubmittedBefore">
@@ -99,26 +123,24 @@
           </div>
           <div class="invalid-feedback" *ngIf="isUserRequiredFields">
             <sup>*</sup>
-            {{languageRequested.toLowerCase() === "en" ?
-            "Please fill all the required fields to submit your value" :
-            "يرجى ملء جميع الحقول المطلوبة لتقديم القيمة الخاصة بك"}}
+            {{
+            languageRequested.toLowerCase() === "en"
+            ? "Please fill all the required fields to submit your value"
+            : "يرجى ملء جميع الحقول المطلوبة لتقديم القيمة الخاصة بك"
+            }}
           </div>
           <div class="valid-feedback" *ngIf="isUserSuccessSubmitForm">
             Successfully submitted the form
           </div>
         </div>
-
       </div>
       <!-- Submit Button -->
-      <div class='submit-btn-container'>
-        <button type="submit" class=" btn btn-danger btn-lg btn-block"
-          [disabled]=submittedSuccessfully>{{languageRequested.toLowerCase() ===
-          "en" ?
-          "SUBMIT" :
-          "إرسال"}}</button>
+      <div class="submit-btn-container">
+        <button type="submit" class="btn btn-danger btn-lg btn-block" [disabled]="submittedSuccessfully">
+          {{ languageRequested.toLowerCase() === "en" ? "SUBMIT" : "إرسال" }}
+        </button>
       </div>
-
-    </form><!-- Form ends -->
-
+    </form>
+    <!-- Form ends -->
   </div>
 </div>
