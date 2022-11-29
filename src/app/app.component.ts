@@ -89,7 +89,7 @@ export class AppComponent {
   registrationForm = this.fb.group({
     file: [null],
     fullName: this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[_A-z0-9]*((-|\s)*[_A-z0-9])*$')]],
+      fullName: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[آ-یA-z]{2,}( [آ-یA-z]{2,})+([آ-یA-z]|[ ]?)$')]],
     }),
     mobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
   }) as any;
