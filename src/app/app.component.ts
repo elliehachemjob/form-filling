@@ -70,14 +70,17 @@ export class AppComponent {
         });
       }
       this.location.replaceState(`/${this.id}`);
-      this.getQuestion(this.id).subscribe(data => {
-        this.questionDescription = data.QuestionEN;
-      });
-      if (this.questionDescription === undefined) {
-        this.getQuestion(this.id, true).subscribe(data => {
-          this.questionDescription = data[0].QuestionEN;
-        });
-      };
+      this.getQuestion(this.id).subscribe(
+        data => { this.questionDescription = data.QuestionEN; },
+        err => {
+          this.getQuestion(this.id, true).subscribe(data => {
+            this.questionDescription = data[0].QuestionEN;
+          });
+        }
+      );
+
+
+
       this.getAnswers().subscribe((answers) => {
         this.answersNeeded = answers.filter((answer: any) => answer.questionID === this.id);
         if (this.answersNeeded.length === 0) { this.answersNeeded.push(answers[0], answers[1]); }
