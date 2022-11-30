@@ -100,6 +100,7 @@
               : "الرجاء إدخال رقم هاتف صحيح "
               }}
             </div>
+
           </div>
         </div>
       </div>
@@ -123,7 +124,14 @@
             </ul>
           </div>
           <div class="invalid-feedback" *ngIf="isUserSubmittedBefore">
-            <sup>*</sup>The user have already answered before
+            <sup>*</sup>
+            {{
+            languageRequested.toLowerCase() === "en"
+            ? "The user have already answered before"
+            : "لقد أجاب المستخدم بالفعل من قبل
+            "
+            }}
+
           </div>
           <div class="invalid-feedback" *ngIf="isUserRequiredFields">
             <sup>*</sup>
