@@ -157,32 +157,39 @@ export class AppComponent {
   onSubmit() {
     this.submitted = true;
     this.getUserAnswers().subscribe((answers) => {
+      console.log(this.id, "nrp");
       let value = answers.filter(
         (answer: any) =>
-          answer.phone.toString() ===
-          this.registrationForm.value.mobileNumber &&
+          answer.phone ===
+          parseInt(this.registrationForm.value.mobileNumber) &&
           answer.questionID === this.id
       );
-      if (value.length > 0) {
-        this.isUserSubmittedBefore = true;
-        this.isUserSuccessSubmitForm = false;
-      } else {
-        if (this.registrationForm.valid) {
-          if (this.answerValue !== undefined) {
-            this.postQuestion();
-            this.submittedSuccessfully = true;
-            this.isUserRequiredFields = false;
-            this.isUserSubmittedBefore = false;
-            this.isUserSuccessSubmitForm = true;
-          } else {
-            this.isUserRequiredFields = true;
-            this.isUserSuccessSubmitForm = false;
-          }
+
+      if (this.registrationForm.valid) {
+        if (value.length > 0) {
+          this.isUserSubmittedBefore = true;
+          this.isUserSuccessSubmitForm = false;
+          this.isUserRequiredFields = false;
+          return;
+        }
+        if (this.answerValue !== undefined) {
+          this.postQuestion();
+          this.submittedSuccessfully = true;
+          this.isUserRequiredFields = false;
+          this.isUserSubmittedBefore = false;
+          this.isUserSuccessSubmitForm = true;
+          this.isUserSubmittedBefore = false;
         } else {
           this.isUserRequiredFields = true;
           this.isUserSuccessSubmitForm = false;
+          this.isUserSubmittedBefore = false;
         }
+      } else {
+        this.isUserRequiredFields = true;
+        this.isUserSuccessSubmitForm = false;
+        this.isUserSubmittedBefore = false;
       }
+
     });
   }
   public getQuestion(id: any, error: boolean = false) {
