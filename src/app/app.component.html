@@ -46,10 +46,27 @@
               }}
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.errors?.minlength">
-              <sup>*</sup>Name must be 2 characters long
+              <sup>*</sup>
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? " Name must be 2 characters long
+              "
+              : "يجب أن يتكون الاسم من حرفين"
+              }}
+
             </div>
             <div class="invalid-feedback" *ngIf="submitted && myForm.fullName.errors?.pattern">
-              <sup>*</sup>No special charcter allowed
+              <sup>*</sup>
+
+              {{
+              languageRequested.toLowerCase() === "en"
+              ? " No special charcter allowed
+              "
+              : "لا يسمح برمز خاص
+              "
+              }}
+
+
             </div>
           </div>
         </div>
